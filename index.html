@@ -3,159 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر أوراق و كتب - Bouira</title>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Cairo -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"
+    <title> Books_Store </title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header / Navigation Bar -->
-    <header>
-        <div class="nav-container">
-            <!-- Logo with Image -->
-            <a href="#" class="logo-container">
-                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=120&q=80" alt="لوجو المتجر" class="logo-img">
-                <div class="logo-text">
-                    <h1>متجر أوراق و كتب</h1>
-                    <span>Bouira, Algeria</span>
-                </div>
+    <!-- Custom Cursor Effect -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-circle" id="cursor-circle"></div>
+
+    <!-- Header & Navigation Bar -->
+    <header class="header">
+        <div class="container navbar">
+            
+            <!-- 1. Logo & Brand Name (Far Right) -->
+            <a href="#" class="brand-logo">
+                <!-- ضع صورة الشعار الخاص بك في المجلد images باسم logo.png -->
+                <img src="images/logo.png" alt="شعار المتجر" id="logo-img" onerror="this.src='https://via.placeholder.com/40x40?text=📚'">
+                <span class="brand-name"> Books Store </span>
             </a>
 
-            <!-- Controls: Categories, Search & Cart -->
-            <div class="nav-controls">
-                <!-- Dropdown Categories -->
-                <div class="dropdown" id="categoryDropdown">
-                    <button class="dropdown-btn" onclick="toggleDropdown()">
-                        <i class="fa-solid fa-list"></i>
-                        <span>الأقسام</span>
-                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" onclick="filterCategory('all')"><i class="fa-solid fa-border-all"></i> جميع الكتب</a></li>
-                        <li><a href="#" onclick="filterCategory('تاريخ')"><i class="fa-solid fa-landmark"></i> تاريخ</a></li>
-                        <li><a href="#" onclick="filterCategory('تطوير الذات')"><i class="fa-solid fa-brain"></i> تطوير الذات</a></li>
-                        <li><a href="#" onclick="filterCategory('روايات')"><i class="fa-solid fa-book-open"></i> روايات</a></li>
-                        <li><a href="#" onclick="filterCategory('علوم')"><i class="fa-solid fa-atom"></i> علوم</a></li>
-                    </ul>
-                </div>
+            <!-- Hamburger Button for Mobile -->
+            <button class="hamburger" id="hamburger-btn" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-                <!-- Search Input -->
+            <!-- Nav Content Wrapper -->
+            <div class="nav-content" id="nav-content">
+                <!-- 2. Search Bar -->
                 <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="إبحث عن عنوان، مؤلف..." onkeyup="searchProducts()">
+                    <input type="text" id="search-input" placeholder="ابحث عن اسم كتاب أو مؤلف...">
+                    <button id="search-btn" aria-label="بحث">🔍</button>
                 </div>
 
-                <!-- Quick Cart Toggle -->
-                <div class="cart-icon-btn" onclick="scrollToCart()">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="cart-badge" id="cartBadge">0</span>
+                <!-- 3. Categories Dropdown Button -->
+                <div class="dropdown">
+                    <button class="dropdown-btn">الأقسام ▾</button>
+                    <div class="dropdown-content">
+                        <a href="#">روايات</a>
+                        <a href="#">كتب تطوير الذات</a>
+                        <a href="#">كتب علمية</a>
+                        <a href="#">كتب تقنية</a>
+                        <a href="#">كتب التاريخ</a>
+                        <a href="#">كتب الأطفال</a>
+                        <a href="#">كتب دينية</a>
+                        <a href="#">كتب اللغات</a>
+                        <a href="#">كتب الطبخ</a>
+                        <a href="#">كتب أخرى</a>
+                    </div>
+                </div>
+
+                <!-- 4. Shopping Cart Button -->
+                <div class="cart-icon-wrapper" id="cart-icon-btn">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-text">السلة</span>
+                    <span class="cart-badge" id="cart-count">0</span>
                 </div>
             </div>
+
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="main-container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>اكتشف كتابك القادم</h1>
+                <p>تصفح عالمًا مليئًا بالمعرفة والشغف. مئات الكتب المتنوعة في كافة المجالات بين يديك الآن.</p>
+                <a href="#books-section" class="btn btn-primary">تصفح الكتب</a>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-books.jpg" alt="مجموعة كتب" onerror="this.src='https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80'">
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Showcase Section -->
+    <main class="container main-content" id="books-section">
+        <h2 class="section-title">أحدث الكتب المتاحة</h2>
         
-        <!-- Products Grid Area -->
-        <section class="products-section">
-            <div class="section-header">
-                <h2 class="section-title" id="currentCategoryTitle">
-                    <i class="fa-solid fa-book"></i> جميع الكتب المتاحة
-                </h2>
-                <span style="font-size: 0.85rem; color: var(--text-muted);" id="productCount">عرض 4 كتب</span>
-            </div>
+        <!-- Search Status -->
+        <div id="no-results" class="no-results hidden">
+            لم يتم العثور على كتب مطابقة.
+        </div>
 
-            <div class="products-grid" id="productsGrid">
-                <!-- Dynamic Products -->
-            </div>
-        </section>
-
-        <!-- Sidebar Shopping Cart -->
-        <aside class="cart-sidebar" id="cartSection">
-            <div class="cart-header">
-                <h2><i class="fa-solid fa-shopping-bag"></i> سلة التسوق</h2>
-            </div>
-
-            <div class="cart-items-list" id="cartItemsList">
-                <div class="empty-cart-msg">السلة فارغة حالياً</div>
-            </div>
-
-            <div class="cart-summary">
-                <div class="cart-summary-row">
-                    <span>الإجمالي:</span>
-                    <span id="cartTotal">0 د.ج</span>
-                </div>
-            </div>
-
-            <div class="cart-actions">
-                <button class="checkout-btn" onclick="openCheckoutModal()">
-                    <i class="fa-solid fa-check-circle"></i> إتمام الطلب
-                </button>
-                <button class="clear-btn" onclick="clearCart()">
-                    <i class="fa-solid fa-trash-can"></i> تفريغ السلة
-                </button>
-            </div>
-        </aside>
-
+        <!-- Books Grid Layout -->
+        <div class="books-grid" id="books-container">
+            <!-- Dynamic Content loaded via JS -->
+        </div>
     </main>
 
-    <!-- Modal for Checkout / Order Details -->
-    <div class="modal-overlay" id="checkoutModal">
-        <div class="modal-card">
+    <!-- Shopping Cart Center Modal Popup -->
+    <div class="cart-modal-overlay" id="cart-modal-overlay">
+        <div class="cart-modal-card" id="cart-modal-card">
+            <div class="cart-header">
+                <h3>سلة المشتريات 🛒</h3>
+                <button class="close-btn" id="close-cart-btn">&times;</button>
+            </div>
+
+            <div class="cart-body" id="cart-items-container">
+                <!-- Items injected by JS -->
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>المجموع الإجمالي:</span>
+                    <span id="cart-total-price">0 د.ج</span>
+                </div>
+                <div class="cart-actions">
+                    <button class="btn btn-danger" id="clear-cart-btn">تفريغ السلة</button>
+                    <button class="btn btn-success" id="checkout-btn">إرسال الطلبية</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Form Modal -->
+    <div class="modal-overlay" id="order-modal-overlay">
+        <div class="modal-container">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-paper-plane"></i> تفاصيل الطلب والشحن</h3>
-                <button class="close-modal-btn" onclick="closeCheckoutModal()"><i class="fa-solid fa-xmark"></i></button>
+                <h3>إكمال معلومات الطلب</h3>
+                <button class="close-btn" id="close-modal-btn">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="orderForm" onsubmit="handleSendOrder(event)">
-                    
+                <form id="checkout-form">
                     <div class="form-group">
-                        <label for="clientName"><i class="fa-solid fa-user"></i> الاسم الكامل</label>
-                        <input type="text" id="clientName" placeholder="أدخل اسمك الكريم" required>
+                        <label for="full-name">الاسم الكامل *</label>
+                        <input type="text" id="full-name" required placeholder="مثال: محمد علي">
                     </div>
-
                     <div class="form-group">
-                        <label for="clientPhone"><i class="fa-solid fa-phone"></i> رقم الهاتف</label>
-                        <input type="tel" id="clientPhone" placeholder="06XXXXXXXX" required>
+                        <label for="phone-number">رقم الهاتف *</label>
+                        <input type="tel" id="phone-number" required placeholder="مثال: 0661234567">
                     </div>
-
                     <div class="form-group">
-                        <label><i class="fa-solid fa-truck-ramp-box"></i> مكان الاستلام</label>
+                        <label for="location">العنوان / الولاية والبلدية *</label>
+                        <input type="text" id="location" required placeholder="مثال: الجزائر العاصمة، سيدي امحمد">
+                    </div>
+                    <div class="form-group">
+                        <label>مكان الاستلام *</label>
                         <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="deliveryType" value="توصيل للمنزل" checked>
-                                المنزل
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="deliveryType" value="استلام من المكتب">
-                                المكتب / المقر
-                            </label>
+                            <label><input type="radio" name="pickup-location" value="المنزل" checked> المنزل</label>
+                            <label><input type="radio" name="pickup-location" value="المكتب"> المكتب</label>
                         </div>
                     </div>
 
-                    <div class="form-group" style="margin-top: 1rem;">
-                        <label for="clientWilaya"><i class="fa-solid fa-location-dot"></i> الولاية / العنوان</label>
-                        <input type="text" id="clientWilaya" placeholder="مثال: البويرة - وسط المدينة" required>
-                    </div>
-
-                    <div style="background-color: #f8faf9; padding: 0.8rem; border-radius: 8px; margin: 1rem 0; border: 1px solid #e2e8f0;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--primary-color);">
-                            <span>السعر الكامل للطلب:</span>
-                            <span id="modalTotalPrice">0 د.ج</span>
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h4>ملخص الطلبية</h4>
+                        <div id="order-summary-list"></div>
+                        <div class="order-summary-total">
+                            <strong>الإجمالي: </strong>
+                            <strong id="summary-total-price">0 د.ج</strong>
                         </div>
                     </div>
 
-                    <button type="submit" class="send-order-btn">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> إرسال الطلب عبر الواتساب
+                    <button type="submit" class="btn btn-whatsapp-submit" id="whatsapp-submit-btn">
+                        إرسال الطلب عبر WhatsApp 💬
                     </button>
                 </form>
             </div>
         </div>
     </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
