@@ -286,7 +286,7 @@ function sendToWhatsApp(e) {
                   `*الكتب المطلوبة:*\n${booksListText}\n` +
                   `💰 *المجموع الكلي:* ${totalPrice.toLocaleString()} د.ج`;
 
-  const phoneNumber = "213600000000"; // ضعي رقمكِ هنا
+  const phoneNumber = "213780243603"; // ضعي رقمكِ هنا
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   window.open(whatsappUrl, '_blank');
