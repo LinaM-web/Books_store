@@ -3,14 +3,14 @@
    ========================================== */
 const allBooks = [
   { id: 1, title: " رسائل من القران ", author: " ادهم شرقاوي ", price: 1000, category: "دينية", image: "images/b1.jpg" },
-  { id: 2, title: " رسائل من النبي ", author:" ادهم شرقاوي ", price: 1000, category: "دينية", image: "images/back.jpg" },
-  { id: 3, title: "رسائل من الصحابة ", author:" ادهم شرقاوي ", price: 1000, category: "دينية", image: "images/back.jpg" },
-  { id: 4, title: " لانها كيارا ", author: " سما سامي " , price: 1000, category: "فانتازيا", image: "images/back.jpg" },
-  { id: 5, title: " مملكة الكوابيس و الضباب ", author: " سما سامي " , price: 1000, category: "فانتازيا", image: "images/back.jpg" },
-  { id: 6, title: " العرش الاسود ", author: " سما سامي " , price: 1000, category: "فانتازيا", image: "images/back.jpg" },
-  { id: 7, title: "قضية ست الحسن", author: " ميرنا المهدي ", price: 1000, category: "بوليسية", image: "images/back.jpg" },
-  { id: 8, title: "قضية لوز مر", author: " ميرنا المهدي ", price: 1000, category: "بوليسية", image: "images/back.jpg" },
-  { id: 9, title: "قضية عنب الثعلب", author: " ميرنا المهدي ", price: 1000, category: "بوليسية", image: "images/back.jpg" },
+  { id: 2, title: " رسائل من النبي ", author:" ادهم شرقاوي ", price: 1000, category: "دينية", image: "images/b2.jpg" },
+  { id: 3, title: "رسائل من الصحابة ", author:" ادهم شرقاوي ", price: 1000, category: "دينية", image: "images/b3.jpg" },
+  { id: 4, title: " لانها كيارا ", author: " سما سامي " , price: 1000, category: "فانتازيا", image: "images/b4.jpg" },
+  { id: 5, title: " مملكة الكوابيس و الضباب ", author: " سما سامي " , price: 1000, category: "فانتازيا", image: "images/b5.jpg" },
+  { id: 6, title: " العرش الاسود ", author: " سما سامي " , price: 1000, category: "فانتازيا", image: "images/b6.jpg" },
+  { id: 7, title: "قضية ست الحسن", author: " ميرنا المهدي ", price: 1000, category: "بوليسية", image: "images/b7.jpg" },
+  { id: 8, title: "قضية لوز مر", author: " ميرنا المهدي ", price: 1000, category: "بوليسية", image: "images/b8.jpg" },
+  { id: 9, title: "قضية عنب الثعلب", author: " ميرنا المهدي ", price: 1000, category: "بوليسية", image: "images/b9.jpg" },
 ];
 
 let cart = [];
