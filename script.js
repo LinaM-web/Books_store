@@ -1,322 +1,308 @@
-// ==========================================================================
-// Configurations & Database
-// ==========================================================================
-
-// رقم الواتساب الخاص بالمتجر
-const WHATSAPP_NUMBER = "213000000000";
-
-const booksData = [
-    {
-        id: 1,
-        title: "فن اللامبالاة",
-        author: "مارك مانسون",
-        desc: "كتاب في التنمية البشرية يتناول القوة الحقيقية في قبول الحقائق الصعبة.",
-        price: 1500,
-        image: "images/book1.jpg"
-    },
-    {
-        id: 2,
-        title: "العادات الذرية",
-        author: "جيمس كلير",
-        desc: "إطار عمل موثوق لتطوير عاداتك اليومية وتحقيق نتائج شاسعة.",
-        price: 1800,
-        image: "images/book2.jpg"
-    },
-    {
-        id: 3,
-        title: "مائة عام من العزلة",
-        author: "غابرييل غارثيا ماركيز",
-        desc: "رواية عالمية تروي سيرة عائلة بوينديا عبر سبعة أجيال في قرية ماكوندو.",
-        price: 2100,
-        image: "images/book3.jpg"
-    },
-    {
-        id: 4,
-        title: "الأب الغني والأب الفقير",
-        author: "روبرت كيوساكي",
-        desc: "أهم مفاهيم الاستقلال المالي وبناء الثروة وتغيير التفكير الاستثماري.",
-        price: 1650,
-        image: "images/book4.jpg"
-    },
-    {
-        id: 5,
-        title: "خوارزميات البرمجة",
-        author: "د. أحمد علي",
-        desc: "دليل مبسط وشامل لفهم بناء الخوارزميات وهياكل البيانات للمبتدئين.",
-        price: 2500,
-        image: "images/book5.jpg"
-    },
-    {
-        id: 6,
-        title: "تاريخ الفكر العربي",
-        author: "د. خالد السعيد",
-        desc: "قراءة وتحليل مسار الفكر العربي والتطورات الثقافية والتاريخية.",
-        price: 1900,
-        image: "images/book6.jpg"
-    }
+/* ==========================================
+   1. بيانات الكتب
+   ========================================== */
+const allBooks = [
+  { id: 1, title: " رسائل من القران ", author: " ادهم شرقاوي ", price: 0000, category: "دينية", image: "images/b1.jpg" },
+  { id: 2, title: " رسائل من النبي ", author:" ادهم شرقاوي ", price: 0000, category: "دينية", image: "images/back.jpg" },
+  { id: 3, title: "رسائل من الصحابة ", author:" ادهم شرقاوي ", price: 0000, category: "دينية", image: "images/back.jpg" },
+  { id: 4, title: " لانها كيارا ", author: " سما سامي " , price: 0000, category: "فانتازيا", image: "images/back.jpg" },
+  { id: 5, title: " مملكة الكوابيس و الضباب ", author: " سما سامي " , price: 0000, category: "فانتازيا", image: "images/back.jpg" },
+  { id: 6, title: " العرش الاسود ", author: " سما سامي " , price: 0000, category: "فانتازيا", image: "images/back.jpg" },
+  { id: 7, title: "قضية ست الحسن", author: " ميرنا المهدي ", price: 0000, category: "بوليسية", image: "images/back.jpg" },
+  { id: 8, title: "قضية لوز مر", author: " ميرنا المهدي ", price: 0000, category: "بوليسية", image: "images/back.jpg" },
+  { id: 9, title: "قضية عنب الثعلب", author: " ميرنا المهدي ", price: 0000, category: "بوليسية", image: "images/back.jpg" },
 ];
 
-let cart = JSON.parse(localStorage.getItem('bookstore_cart')) || [];
-const fallbackImg = "https://via.placeholder.com/230x250?text=صورة+الكتاب";
+let cart = [];
 
-// ==========================================================================
-// DOM Elements
-// ==========================================================================
-const booksContainer = document.getElementById('books-container');
-const searchInput = document.getElementById('search-input');
-const noResultsMessage = document.getElementById('no-results');
+/* ==========================================
+   2. إدارة عرض الكتب والبحث والفلترة
+   ========================================== */
 
-const cartIconBtn = document.getElementById('cart-icon-btn');
-const cartCountBadge = document.getElementById('cart-count');
-const cartModalOverlay = document.getElementById('cart-modal-overlay');
-const closeCartBtn = document.getElementById('close-cart-btn');
-const cartItemsContainer = document.getElementById('cart-items-container');
-const cartTotalPrice = document.getElementById('cart-total-price');
-const clearCartBtn = document.getElementById('clear-cart-btn');
+// عرض الكتب داخل الشبكة
+function renderBooks(booksList) {
+  const grid = document.getElementById('shopGrid');
+  if (!grid) return;
 
-const checkoutBtn = document.getElementById('checkout-btn');
-const orderModalOverlay = document.getElementById('order-modal-overlay');
-const closeModalBtn = document.getElementById('close-modal-btn');
-const checkoutForm = document.getElementById('checkout-form');
-const orderSummaryList = document.getElementById('order-summary-list');
-const summaryTotalPrice = document.getElementById('summary-total-price');
+  grid.innerHTML = '';
 
-const hamburgerBtn = document.getElementById('hamburger-btn');
-const navContent = document.getElementById('nav-content');
+  if (booksList.length === 0) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">لا توجد نتائج تطابق بحثك.</p>';
+    return;
+  }
 
-// ==========================================================================
-// Smooth Mouse Cursor Effect Logic
-// ==========================================================================
-const cursorDot = document.getElementById('cursor-dot');
-const cursorCircle = document.getElementById('cursor-circle');
-
-if (window.innerWidth > 900) {
-    document.addEventListener('mousemove', (e) => {
-        cursorDot.style.left = `${e.clientX}px`;
-        cursorDot.style.top = `${e.clientY}px`;
-        
-        // Smooth lag effect for outer circle
-        cursorCircle.animate({
-            left: `${e.clientX}px`,
-            top: `${e.clientY}px`
-        }, { duration: 400, fill: "forwards" });
-    });
+  booksList.forEach(book => {
+    const card = document.createElement('div');
+    card.className = 'shop-card';
+    card.innerHTML = `
+      <img src="${book.image}" alt="${book.title}">
+      <h3>${book.title}</h3>
+      <p class="author">${book.author}</p>
+      <span class="price">${book.price.toLocaleString()} د.ج</span>
+      <button class="add-btn" onclick="addToCart(${book.id})">🛒 إضافة للسلة</button>
+    `;
+    grid.appendChild(card);
+  });
 }
 
-// ==========================================================================
-// Core Functions
-// ==========================================================================
+// البحث المباشر
+function liveSearch() {
+  const input = document.getElementById('searchInput');
+  if (!input) return;
 
+  const filter = input.value.toLowerCase().trim();
+  const filtered = allBooks.filter(book => 
+    book.title.toLowerCase().includes(filter) || 
+    book.author.toLowerCase().includes(filter)
+  );
+
+  renderBooks(filtered);
+}
+
+// التصفية حسب التصنيف
+function filterBooks(categoryName, btnElement) {
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) searchInput.value = '';
+
+  const allFilterBtns = document.querySelectorAll('.filter-btn');
+  allFilterBtns.forEach(btn => btn.classList.remove('active'));
+  
+  if (btnElement) btnElement.classList.add('active');
+
+  if (categoryName === 'الكل') {
+    renderBooks(allBooks);
+  } else {
+    const filteredList = allBooks.filter(book => book.category === categoryName);
+    renderBooks(filteredList);
+  }
+}
+
+/* ==========================================
+   3. إدارة السلة وتخزين البيانات (LocalStorage)
+   ========================================== */
+
+function saveCartToStorage() {
+  localStorage.setItem('userCart', JSON.stringify(cart));
+}
+
+function loadCartFromStorage() {
+  const savedCart = localStorage.getItem('userCart');
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+  }
+}
+
+// فتح وإغلاق السلة
+function toggleCart() {
+  const drawer = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('cartOverlay');
+
+  if (drawer) drawer.classList.toggle('open');
+  if (overlay) overlay.classList.toggle('active');
+
+  // إرجاع واجهة السلة للوضع الافتراضي عند الإغلاق
+  if (drawer && !drawer.classList.contains('open')) {
+    setTimeout(showCartView, 200);
+  }
+}
+
+// إضافة كتاب
+function addToCart(bookId) {
+  const book = allBooks.find(b => b.id === bookId);
+  if (!book) return;
+
+  const existing = cart.find(item => item.id === bookId);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...book, quantity: 1 });
+  }
+
+  saveCartToStorage();
+  updateCartUI();
+  
+  const drawer = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('cartOverlay');
+  if (drawer) drawer.classList.add('open');
+  if (overlay) overlay.classList.add('active');
+}
+
+// تعديل الكمية
+function changeQuantity(bookId, change) {
+  const item = cart.find(b => b.id === bookId);
+  if (!item) return;
+
+  item.quantity += change;
+
+  if (item.quantity <= 0) {
+    removeFromCart(bookId);
+  } else {
+    saveCartToStorage();
+    updateCartUI();
+  }
+}
+
+// حذف عنصر
+function removeFromCart(bookId) {
+  cart = cart.filter(item => item.id !== bookId);
+  saveCartToStorage();
+  updateCartUI();
+}
+
+// تفريغ السلة
+function clearCart() {
+  if (cart.length === 0) return;
+  if (confirm("هل أنت متأكد من تفريغ جميع العناصر من السلة؟")) {
+    cart = [];
+    localStorage.removeItem('userCart');
+    updateCartUI();
+  }
+}
+
+// تحديث الواجهة والعدادات
 function updateCartUI() {
-    localStorage.setItem('bookstore_cart', JSON.stringify(cart));
-    
-    const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-    cartCountBadge.textContent = totalItems;
+  const container = document.getElementById('cartItemsContainer');
+  const countEl = document.querySelector('.cart-count');
+  const totalEl = document.getElementById('cartTotalPrice');
 
-    cartItemsContainer.innerHTML = '';
-    
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="no-results">السلة فارغة حالياً.</p>';
-        cartTotalPrice.textContent = '0 د.ج';
-        return;
-    }
+  if (!container) return;
 
-    let total = 0;
+  container.innerHTML = '';
+  let totalCount = 0;
+  let totalPrice = 0;
 
+  if (cart.length === 0) {
+    container.innerHTML = '<p style="text-align:center; color:#888; padding:30px 0;">السلة فارغة حالياً 🛒</p>';
+  } else {
     cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
+      totalCount += item.quantity;
+      totalPrice += item.price * item.quantity;
 
-        const cartItemEl = document.createElement('div');
-        cartItemEl.className = 'cart-item';
-        cartItemEl.innerHTML = `
-            <img src="${item.image}" alt="${item.title}" onerror="this.src='${fallbackImg}'">
-            <div class="cart-item-details">
-                <div class="cart-item-title">${item.title}</div>
-                <div class="cart-item-price">${item.price} د.ج</div>
-                <div class="cart-item-controls">
-                    <button class="qty-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="qty-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
-                    <button class="remove-btn" onclick="removeFromCart(${item.id})">إزالة</button>
-                </div>
-            </div>
-        `;
-        cartItemsContainer.appendChild(cartItemEl);
+      const itemEl = document.createElement('div');
+      itemEl.className = 'cart-item';
+      itemEl.innerHTML = `
+        <img src="${item.image}" alt="${item.title}">
+        <div class="cart-item-info">
+          <h4>${item.title}</h4>
+          <span class="price">${(item.price * item.quantity).toLocaleString()} د.ج</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
+            <span>${item.quantity}</span>
+            <button class="qty-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <button class="delete-item-btn" onclick="removeFromCart(${item.id})">🗑️</button>
+      `;
+      container.appendChild(itemEl);
     });
+  }
 
-    cartTotalPrice.textContent = `${total} د.ج`;
+  if (countEl) countEl.textContent = totalCount;
+  if (totalEl) totalEl.textContent = `${totalPrice.toLocaleString()} د.ج`;
 }
 
-function renderBooks(booksToRender) {
-    booksContainer.innerHTML = '';
+/* ==========================================
+   4. التنقل المباشر داخل الحاوية وإرسال الطلب
+   ========================================== */
 
-    if (booksToRender.length === 0) {
-        noResultsMessage.classList.remove('hidden');
-        return;
-    } else {
-        noResultsMessage.classList.add('hidden');
-    }
+// التحويل لاستمارة البيانات والملخص
+function showCheckoutForm() {
+  if (cart.length === 0) {
+    alert("السلة فارغة! أضفي بعض الكتب أولاً.");
+    return;
+  }
 
-    booksToRender.forEach(book => {
-        const card = document.createElement('div');
-        card.className = 'book-card';
-        card.innerHTML = `
-            <img src="${book.image}" alt="${book.title}" onerror="this.src='${fallbackImg}'">
-            <div class="book-info">
-                <div class="book-title">${book.title}</div>
-                <div class="book-author">${book.author}</div>
-                <div class="book-desc">${book.desc}</div>
-                <div class="book-bottom">
-                    <span class="book-price">${book.price} د.ج</span>
-                    <button class="btn btn-primary" onclick="addToCart(${book.id})">أضف للسلة</button>
-                </div>
-            </div>
-        `;
-        booksContainer.appendChild(card);
-    });
+  const mainBody = document.getElementById('cartMainBody');
+  const checkoutBody = document.getElementById('checkoutBody');
+  const title = document.getElementById('cartHeaderTitle');
+
+  if (mainBody) mainBody.style.display = 'none';
+  if (checkoutBody) checkoutBody.style.display = 'block';
+  if (title) title.textContent = 'إتمام الطلب 📝';
+
+  renderOrderSummary();
 }
 
-window.addToCart = function(id) {
-    const book = booksData.find(b => b.id === id);
-    if (!book) return;
+// العودة لعرض الكتب في السلة
+function showCartView() {
+  const mainBody = document.getElementById('cartMainBody');
+  const checkoutBody = document.getElementById('checkoutBody');
+  const title = document.getElementById('cartHeaderTitle');
 
-    const existingItem = cart.find(item => item.id === id);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({ ...book, quantity: 1 });
-    }
-
-    updateCartUI();
-    toggleCartModal(true);
-};
-
-window.changeQuantity = function(id, delta) {
-    const item = cart.find(item => item.id === id);
-    if (!item) return;
-
-    item.quantity += delta;
-    if (item.quantity <= 0) {
-        cart = cart.filter(i => i.id !== id);
-    }
-
-    updateCartUI();
-};
-
-window.removeFromCart = function(id) {
-    cart = cart.filter(item => item.id !== id);
-    updateCartUI();
-};
-
-clearCartBtn.addEventListener('click', () => {
-    cart = [];
-    updateCartUI();
-});
-
-searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.trim().toLowerCase();
-    const filtered = booksData.filter(book => 
-        book.title.toLowerCase().includes(query) || 
-        book.author.toLowerCase().includes(query)
-    );
-    renderBooks(filtered);
-});
-
-// Toggle Center Cart Modal
-function toggleCartModal(open) {
-    if (open) {
-        cartModalOverlay.classList.add('active');
-    } else {
-        cartModalOverlay.classList.remove('active');
-    }
+  if (checkoutBody) checkoutBody.style.display = 'none';
+  if (mainBody) mainBody.style.display = 'block';
+  if (title) title.textContent = 'سلة التسوق 🛒';
 }
 
-cartIconBtn.addEventListener('click', () => toggleCartModal(true));
-closeCartBtn.addEventListener('click', () => toggleCartModal(false));
-cartModalOverlay.addEventListener('click', (e) => {
-    if (e.target === cartModalOverlay) toggleCartModal(false);
-});
-
-// Mobile Navbar Toggle
-hamburgerBtn.addEventListener('click', () => {
-    navContent.classList.toggle('active');
-});
-
-// ==========================================================================
-// Order Form & WhatsApp Logic
-// ==========================================================================
-checkoutBtn.addEventListener('click', () => {
-    if (cart.length === 0) {
-        alert('سلة المشتريات فارغة!');
-        return;
-    }
-    
-    toggleCartModal(false);
-    renderOrderSummary();
-    orderModalOverlay.classList.add('active');
-});
-
-closeModalBtn.addEventListener('click', () => {
-    orderModalOverlay.classList.remove('active');
-});
-
+// بناء ملخص الطلب المصغر
 function renderOrderSummary() {
-    orderSummaryList.innerHTML = '';
-    let total = 0;
+  const listContainer = document.getElementById('summaryItemsList');
+  const totalEl = document.getElementById('summaryTotalPrice');
+  
+  if (!listContainer || !totalEl) return;
 
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
-        const row = document.createElement('div');
-        row.innerHTML = `<span>${item.title} × ${item.quantity}</span> <span>${itemTotal} د.ج</span>`;
-        orderSummaryList.appendChild(row);
-    });
+  listContainer.innerHTML = '';
+  let totalPrice = 0;
 
-    summaryTotalPrice.textContent = `${total} د.ج`;
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    totalPrice += itemTotal;
+
+    const row = document.createElement('div');
+    row.className = 'summary-item-row';
+    row.style.cssText = "display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 4px; color: #444;";
+    row.innerHTML = `
+      <span>• ${item.title} (x${item.quantity})</span>
+      <span>${itemTotal.toLocaleString()} د.ج</span>
+    `;
+    listContainer.appendChild(row);
+  });
+
+  totalEl.textContent = `${totalPrice.toLocaleString()} د.ج`;
 }
 
-checkoutForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// صياغة وإرسال الطلب عبر الواتساب
+function sendToWhatsApp(e) {
+  e.preventDefault();
 
-    const fullName = document.getElementById('full-name').value.trim();
-    const phone = document.getElementById('phone-number').value.trim();
-    const location = document.getElementById('location').value.trim();
-    const pickupOption = document.querySelector('input[name="pickup-location"]:checked').value;
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
 
-    if (!fullName || !phone || !location || !pickupOption) {
-        alert('يرجى ملء جميع الحقول المطلوبة بشكل صحيح.');
-        return;
-    }
+  let booksListText = "";
+  let totalPrice = 0;
 
-    let message = `طلبية جديدة 📚\n\n`;
-    message += `👤 *الاسم:* ${fullName}\n`;
-    message += `📞 *رقم الهاتف:* ${phone}\n`;
-    message += `📍 *الموقع:* ${location}\n`;
-    message += `🏠 *مكان الاستلام:* ${pickupOption}\n\n`;
-    message += `📖 *الكتب المطلوبة:*\n`;
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * item.quantity;
+    totalPrice += itemTotal;
+    booksListText += `${index + 1}. *${item.title}* (الكمية: ${item.quantity}) - ${itemTotal.toLocaleString()} د.ج\n`;
+  });
 
-    let total = 0;
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
-        message += `- ${item.title} × ${item.quantity} (${itemTotal} د.ج)\n`;
-    });
+  const message = `*طلب جديد من المتجر* 📚\n\n` +
+                  `*معلومات الزبون:*\n` +
+                  `👤 *الاسم:* ${name}\n` +
+                  `📞 *الهاتف:* ${phone}\n` +
+                  `📍 *العنوان:* ${address}\n\n` +
+                  `*الكتب المطلوبة:*\n${booksListText}\n` +
+                  `💰 *المجموع الكلي:* ${totalPrice.toLocaleString()} د.ج`;
 
-    message += `\n💰 *السعر الإجمالي:* ${total} د.ج`;
+  const phoneNumber = "213600000000"; // ضعي رقمكِ هنا
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
 
-    cart = [];
-    updateCartUI();
-    orderModalOverlay.classList.remove('active');
-    checkoutForm.reset();
+  // تفريغ وتصفير وإغلاق
+  cart = [];
+  localStorage.removeItem('userCart');
+  updateCartUI();
+  toggleCart();
+}
 
-    window.open(whatsappURL, '_blank');
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderBooks(booksData);
-    updateCartUI();
-});
+/* ==========================================
+   5. التهيئة عند تحميل الصفحة
+   ========================================== */
+window.onload = function() {
+  renderBooks(allBooks);
+  loadCartFromStorage();
+  updateCartUI();
+};

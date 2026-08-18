@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+        <nav class="navbar" dir="rtl">
+        <div class="nav-brand">
+            <img src="images/Logo.png" alt="شعارات المتجر" class="logo-img">
+            <span class="brand-name"> Book Store </span>
+        </div>
+
+        <div class="nav-center">
+            <ul class="nav-links">
+                                      <li><a href="index.html"> العودة </a></li>
+
+                      <li><a href="#contact-us">تواصل معنا</a></li>
+
+
+            </ul>
+<!-- شريط البحث -->
+<div class="search-box">
+  <input 
+    type="text" 
+    id="searchInput" 
+    onkeyup="liveSearch()" 
+    placeholder="ابحث عن كتاب أو مؤلف..."
+  >
+</div>
+
+
+
+        </div>
+<div class="nav-left">
+  <a href="javascript:void(0)" class="cart-btn" onclick="toggleCart()">
+    🛒 <span class="cart-count">0</span>
+  </a>
+</div>
+    </nav>
+
+
+
+
+
+
+    <section class="shop-section" dir="rtl">
+  <div class="shop-header">
+    <h2>جميع الكتب والمؤلفات</h2>
+    
+    <!-- أزرار الفلترة السريعة حسب التصنيفات -->
+    <div class="filter-categories">
+      <button class="filter-btn active" onclick="filterBooks('الكل', this)">الكل</button>
+      <button class="filter-btn" onclick="filterBooks('رعب', this)">رعب</button>
+      <button class="filter-btn" onclick="filterBooks('فانتازيا', this)">فانتازيا</button>
+      <button class="filter-btn" onclick="filterBooks('بوليسية', this)">بوليسية</button>
+      <button class="filter-btn" onclick="filterBooks('دينية', this)">دينية</button>
+    </div>
+  </div>
+
+  <!-- شبكة عرض الكتب (الكتب مرتبة عمودياً وأفقياً) -->
+  <div class="shop-books-grid" id="shopGrid">
+    <!-- الجافاسكربت سيعرض الكتب هنا تلقائياً -->
+  </div>
+</section>
+
+
+
+
+    <!-- Footer Section -->
+<footer class="footer" dir="rtl"  id="contact-us">
+  <div class="footer-container">
+    
+    <!-- 1. الشعار والوصف وشبكات التواصل -->
+    <div class="footer-box brand-box">
+      <div class="footer-brand">
+        <img src="images/Logo.png" alt="شعار المتجر" class="footer-logo">
+        <h3>بيع كتب وروايات</h3>
+      </div>
+      <p>وجهتك الأولى لعالم من الكتب والروايات المكتوبة بعناية.</p>
+      <div class="social-links">
+       <a href="https://www.instagram.com/books_store.dz" class="social-icon instagram" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+       </a>
+       <a href="https://wa.me/213780243603" class="social-icon whatsapp" aria-label="WhatsApp">
+       <i class="fa-brands fa-whatsapp"></i>
+       </a>
+       <a href="https://t.me/Booksstoredz" class="social-icon telegram" aria-label="Telegram">
+        <i class="fa-brands fa-telegram"></i>
+       </a>
+     </div>
+    </div>
+
+    <!-- 2. التصنيفات -->
+    <div class="footer-box">
+      <h4>التصنيفات المتوفرة</h4>
+      <ul>
+        <li> دينية </li>
+        <li> بوليسية </li>
+        <li>فانتازيا</li>
+        <li>أخرى</li>
+      </ul>
+    </div>
+
+    <!-- 3. روابط سريعة -->
+    <div class="footer-box">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="shop.html">الكتب</a></li>
+        <li><a href="index.html">العروض</a></li>
+        <li><a href="index.html"> التغليف </a></li>
+      </ul>
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+  <!-- حقوق النشر -->
+  <div class="footer-bottom">
+    <p>&copy; جميع الحقوق محفوظة. Books Store 2026</p>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- الخلفية المظلمة الساترة -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- Drawer السلة المنبثقة الموحد -->
+<div class="cart-drawer" id="cartDrawer">
+  
+  <!-- رأس النافذة المتغير -->
+  <div class="cart-header">
+    <h3 id="cartHeaderTitle">سلة التسوق 🛒</h3>
+    <button class="close-cart-btn" onclick="toggleCart()">&times;</button>
+  </div>
+
+  <!-- 1. واجهة السلة الرئيسية (تظهر أولاً) -->
+  <div class="cart-body" id="cartMainBody">
+    <!-- قائمة الكتب المُضافة -->
+    <div class="cart-items" id="cartItemsContainer">
+      <!-- الجافاسكربت سيبني البطاقات هنا -->
+    </div>
+
+    <!-- أسفل السلة: المجموع والأزرار -->
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>المجموع الكلي:</span>
+        <span id="cartTotalPrice">0 د.ج</span>
+      </div>
+      
+      <div class="cart-actions">
+        <button class="clear-cart-btn" onclick="clearCart()">تفريغ السلة 🗑️</button>
+        <button class="checkout-btn" onclick="showCheckoutForm()">إرسال الطلب 🚀</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 2. واجهة استمارة المعلومات والملخص (تظهر عند الضغط على إرسال الطلب) -->
+  <div class="checkout-body" id="checkoutBody" style="display: none;">
+    
+
+
+    <!-- نموذج بيانات الزبون -->
+    <form id="checkoutForm" onsubmit="sendToWhatsApp(event)">
+      <div class="form-group">
+        <label>الاسم الكامل:</label>
+        <input type="text" id="custName" required placeholder="مثال: أحمد محمد">
+      </div>
+
+      <div class="form-group">
+        <label>رقم الهاتف:</label>
+        <input type="tel" id="custPhone" required placeholder="06XXXXXXXX">
+      </div>
+
+      <div class="form-group">
+        <label>الولاية / العنوان:</label>
+        <input type="text" id="custAddress" required placeholder="مثال: الجزائر العاصمة - باب الزوار">
+      </div>
+
+
+
+
+
+          <!-- صندوق ملخص الطلبية المصغر -->
+    <div class="order-summary-box">
+      <h4>ملخص الطلبية 📜</h4>
+      <div id="summaryItemsList" class="summary-items-list">
+        <!-- يتم ملء قائمة الكتب ديناميكياً -->
+      </div>
+      <div class="summary-total">
+        <span>المجموع الكلي:</span>
+        <strong id="summaryTotalPrice">0 د.ج</strong>
+      </div>
+    </div>
+
+      <!-- أزرار التنقل والإرسال -->
+      <div class="checkout-actions">
+        <button type="button" class="back-btn" onclick="showCartView()">← رجوع للسلة</button>
+        <button type="submit" class="whatsapp-submit-btn">تأكيد عبر واتساب 📲</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
