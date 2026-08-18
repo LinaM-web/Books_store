@@ -248,14 +248,13 @@ body {
   font-weight: bold;
   color: #201333; /* لون بنفيجي دافئ مطابط للتصميم */
   margin-bottom: 15px;
-  line-height: 1.0;
+  line-height: 0.8;
 }
 
 .hero-content p {
   font-size: 1.1rem;
   color: #140b22;
   margin-bottom: 30px;
-  line-height: 0.2;
 }
 
 .btn-books {
