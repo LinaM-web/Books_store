@@ -473,7 +473,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end; 
-  padding: 40px ;
+  padding: 40px 50px;
   direction: rtl;
 
 
@@ -481,7 +481,7 @@ body {
 
 .pack-content {
   max-width: 450px;
-  text-align: right;
+  text-align: right; 
   margin-left: auto;
   background-color: rgba(75, 54, 96, 0.15); /* أو استخدمي لون آخر مثل rgba(74, 54, 96, 0.2) */
   padding: 30px; /* مسافة داخلية لكي لا يلتصق النص بالحواف */
