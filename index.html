@@ -34,6 +34,12 @@
 
         </div>
 
+        <div class="nav-left">
+  <a href="javascript:void(0)" class="cart-btn" onclick="toggleCart()">
+    🛒 <span class="cart-count">0</span>
+  </a>
+</div>
+
     </nav>
 
 
@@ -61,58 +67,52 @@
     <a href="shop.html" class="view-all">عرض الكل &rarr;</a>
   </div>
   <div  class="slider-container ">
-  <div class="book-card">
-    <img src="images/b4.jpg" >
-    <h3> لانها كيارا </h3>
-    <p> سما سامي </p>
-    <p> 00000 dz </p>
 
-  </div>
 
 
 
     <div class="book-card">
-    <img src="images/b7.jpg" >
+    <img src="images/ست الحسن.jpg" >
     <h3> قضية ست الحسن </h3>
     <p> ميرنا المهدي  </p>
-    <p> 00000 dz </p>
+    <p> 1150 dz </p>
   </div>
 
 
 
     <div class="book-card">
-    <img src="images/back.jpg" >
-    <h3> name </h3>
-    <p> author </p>
-    <p> 00000 dz </p>
+    <img src="images/رسائل قران.jpg" >
+    <h3> رسائل من القران </h3>
+    <p> ادهم شرقاوي </p>
+    <p> 1100 dz </p>
   </div>
 
 
 
 
     <div class="book-card">
-    <img src="images/back.jpg" >
-    <h3> name </h3>
-    <p> author </p>
-    <p> 00000 dz </p>
+    <img src="images/الياقوت.jpg" >
+    <h3> الياقوت </h3>
+    <p> شهد قربان </p>
+    <p> 1450 dz </p>
   </div>
 
 
 
     <div class="book-card">
-    <img src="images/back.jpg" >
-    <h3> name </h3>
-    <p> author </p>
-    <p> 00000 dz </p>
+    <img src="images/لحن الخوف و الصمت.jpg" >
+    <h3> لحن الخوف و الصمت </h3>
+    <p> سما سامي </p>
+    <p> 1450 dz </p>
   </div>
 
 
 
     <div class="book-card">
-    <img src="images/back.jpg" >
-    <h3> name </h3>
-    <p> author </p>
-    <p> 00000 dz </p>
+    <img src="images/مخالب القط.jpg" >
+    <h3> قضية مخالب القط </h3>
+    <p> ميرنا المهدي </p>
+    <p> 1150 dz </p>
   </div>
     </div>
   <div class="slider-container" id="booksSlider"></div>
@@ -126,7 +126,7 @@
                 <h1> عروض خاصة لك فقط </h1>
                 <br>
                 <p> خصومات حصرية علةى مجموعة من كتبنا لفترة محدودة </p>
-                <a href="pack.html" class="btn-pack">  تصفح العروض<span> &rarr; </span> </a>
+                <a href="#" class="btn-pack">  تصفح العروض<span> &rarr; </span> </a>
             </div>
         </div>
     </section>
@@ -144,6 +144,153 @@
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- الخلفية المظلمة الساترة -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- Drawer السلة المنبثقة الموحد -->
+<div class="cart-drawer" id="cartDrawer">
+  
+  <!-- رأس النافذة المتغير -->
+  <div class="cart-header">
+    <h3 id="cartHeaderTitle">سلة التسوق 🛒</h3>
+    <button class="close-cart-btn" onclick="toggleCart()">&times;</button>
+  </div>
+
+  <!-- 1. واجهة السلة الرئيسية (تظهر أولاً) -->
+  <div class="cart-body" id="cartMainBody">
+    <!-- قائمة الكتب المُضافة -->
+    <div class="cart-items" id="cartItemsContainer">
+      <!-- الجافاسكربت سيبني البطاقات هنا -->
+    </div>
+
+    <!-- أسفل السلة: المجموع والأزرار -->
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>المجموع الكلي:</span>
+        <span id="cartTotalPrice">0 د.ج</span>
+      </div>
+      
+      <div class="cart-actions">
+        <button class="clear-cart-btn" onclick="clearCart()">تفريغ السلة 🗑️</button>
+        <button class="checkout-btn" onclick="showCheckoutForm()">إرسال الطلب 🚀</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 2. واجهة استمارة المعلومات والملخص (تظهر عند الضغط على إرسال الطلب) -->
+  <div class="checkout-body" id="checkoutBody" style="display: none;"> 
+
+    <!-- نموذج بيانات الزبون -->
+    <form id="checkoutForm" onsubmit="sendToWhatsApp(event)">
+      <div class="checkout-scrollable-content">
+      <div class="form-group">
+        <label>الاسم الكامل:</label>
+        <input type="text" id="custName" required placeholder="مثال: أحمد محمد">
+      </div>
+
+      <div class="form-group">
+        <label>رقم الهاتف:</label>
+        <input type="tel" id="custPhone" required placeholder="06XXXXXXXX">
+      </div>
+
+            <div class="form-group">
+        <label> الولاية:</label>
+        <input type="text" id="custplace" required placeholder="مثال: أحمد محمد">
+      </div>
+
+<div class="form-group">
+        <label>طريقة التوصيل:</label>
+        <select id="deliveryType" required onchange="toggleAddressField()">
+            <option value="" disabled selected>-- اختر طريقة التوصيل --</option>
+            <option value="المنزل">توصيل إلى المنزل</option>
+            <option value="المكتب">استلام من المكتب</option>
+        </select>
+    </div>
+
+
+    <div class="form-group" id="addressGroup" style="display: none;">
+        <label> العنوان:</label>
+        <input type="text" id="custAddress" placeholder="أدخل الولاية والعنوان بالتفصيل">
+    </div>
+
+    <div class="form-group">
+        <label>ملاحظات إضافية (اختياري):</label>
+        <textarea id="custNotes" placeholder="أي ملاحظات تخص الطلب..."></textarea>
+    </div>
+
+
+
+          <!-- صندوق ملخص الطلبية المصغر -->
+    <div class="order-summary-box">
+      <h4>ملخص الطلبية 📜</h4>
+      <div id="summaryItemsList" class="summary-items-list">
+        <!-- يتم ملء قائمة الكتب ديناميكياً -->
+      </div>
+      <div class="cart-total">
+        <span>المجموع الكلي:</span>
+        <strong id="summaryTotalPrice">0 د.ج</strong>
+      </div>
+    </div>
+  </div>
+      <!-- أزرار التنقل والإرسال -->
+<div class="checkout-actions">
+            <button type="button" class="back-btn" onclick="showCartView()">← رجوع للسلة</button>
+            <button type="submit" class="whatsapp-submit-btn">تأكيد عبر واتساب 📱</button>
+        </div>
+    </form>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
 
 
 

@@ -29,7 +29,7 @@
     type="text" 
     id="searchInput" 
     onkeyup="liveSearch()" 
-    placeholder="ابحث عن كتاب أو مؤلف..."
+    placeholder="🔎 ابحث عن الكتب ... "
   >
 </div>
 
@@ -59,6 +59,7 @@
       <button class="filter-btn" onclick="filterBooks('فانتازيا', this)">فانتازيا</button>
       <button class="filter-btn" onclick="filterBooks('بوليسية', this)">بوليسية</button>
       <button class="filter-btn" onclick="filterBooks('دينية', this)">دينية</button>
+      <button class="filter-btn" onclick="filterBooks('جريمة و تشويق', this)">جريمة و تشويق</button>
     </div>
   </div>
 
@@ -210,12 +211,11 @@
 
 
   <!-- 2. واجهة استمارة المعلومات والملخص (تظهر عند الضغط على إرسال الطلب) -->
-  <div class="checkout-body" id="checkoutBody" style="display: none;">
-    
-
+  <div class="checkout-body" id="checkoutBody" style="display: none;"> 
 
     <!-- نموذج بيانات الزبون -->
     <form id="checkoutForm" onsubmit="sendToWhatsApp(event)">
+      <div class="checkout-scrollable-content">
       <div class="form-group">
         <label>الاسم الكامل:</label>
         <input type="text" id="custName" required placeholder="مثال: أحمد محمد">
@@ -226,12 +226,30 @@
         <input type="tel" id="custPhone" required placeholder="06XXXXXXXX">
       </div>
 
-      <div class="form-group">
-        <label>الولاية / العنوان:</label>
-        <input type="text" id="custAddress" required placeholder="مثال: الجزائر العاصمة - باب الزوار">
+            <div class="form-group">
+        <label> الولاية:</label>
+        <input type="text" id="custName" required placeholder="مثال: أحمد محمد">
       </div>
 
+<div class="form-group">
+        <label>طريقة التوصيل:</label>
+        <select id="deliveryType" required onchange="toggleAddressField()">
+            <option value="" disabled selected>-- اختر طريقة التوصيل --</option>
+            <option value="المنزل">توصيل إلى المنزل</option>
+            <option value="المكتب">استلام من المكتب</option>
+        </select>
+    </div>
 
+
+    <div class="form-group" id="addressGroup" style="display: none;">
+        <label> العنوان:</label>
+        <input type="text" id="custAddress" placeholder="أدخل الولاية والعنوان بالتفصيل">
+    </div>
+
+    <div class="form-group">
+        <label>ملاحظات إضافية (اختياري):</label>
+        <textarea id="custNotes" placeholder="أي ملاحظات تخص الطلب..."></textarea>
+    </div>
 
 
 
@@ -241,17 +259,17 @@
       <div id="summaryItemsList" class="summary-items-list">
         <!-- يتم ملء قائمة الكتب ديناميكياً -->
       </div>
-      <div class="summary-total">
+      <div class="cart-total">
         <span>المجموع الكلي:</span>
         <strong id="summaryTotalPrice">0 د.ج</strong>
       </div>
     </div>
-
+  </div>
       <!-- أزرار التنقل والإرسال -->
-      <div class="checkout-actions">
-        <button type="button" class="back-btn" onclick="showCartView()">← رجوع للسلة</button>
-        <button type="submit" class="whatsapp-submit-btn">تأكيد عبر واتساب 📲</button>
-      </div>
+<div class="checkout-actions">
+            <button type="button" class="back-btn" onclick="showCartView()">← رجوع للسلة</button>
+            <button type="submit" class="whatsapp-submit-btn">تأكيد عبر واتساب 📱</button>
+        </div>
     </form>
 
   </div>

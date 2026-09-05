@@ -2,30 +2,8 @@
    1. بيانات الكتب
    ========================================== */
 const allBooks = [
-  { id: 1, title: " رسائل من القران ", author: " ادهم شرقاوي ", price: 1100, category: "دينية", image: "images/رسائل قران.jpg" },
-  { id: 2, title: "رسائل من النبي ", author:" ادهم شرقاوي ", price: 1100, category: "دينية", image: "images/رسائل نبي.jpg" },
-  { id: 3, title: "رسائل من الصحابة ", author:" ادهم شرقاوي ", price: 1100, category: "دينية", image: "images/رسائل صحابة.jpg" },
-  { id: 4, title: "رسائل من التابعين ", author:" ادهم شرقاوي ", price: 1100, category: "دينية", image: "images/رسائل تابعين.jpg" },
-
-  { id: 5, title: "لانها كيارا ", author: " سما سامي " , price: 1200, category: "فانتازيا", image: "images/كيارا.jpg" },
-  { id: 6, title: " مملكة الكوابيس و الضباب ", author: " سما سامي " , price: 1200, category: "فانتازيا", image: "images/كوابيس و الضباب.jpg" },
-  { id: 7, title: "العرش الاسود ", author: " سما سامي " , price: 1200, category: "فانتازيا", image: "images/العرش الاسود.jpg" },
-  { id: 8, title: "لحن الخوف و الصمت ", author: " سما سامي " , price: 1450, category: "فانتازيا", image: "images/لحن الخوف و الصمت.jpg" },
-
-  { id: 9, title: "قضية ست الحسن", author: " ميرنا المهدي ", price: 1150, category: "بوليسية", image: "images/ست الحسن.jpg" },
-  { id: 10, title: "قضية لوز مر", author: " ميرنا المهدي ", price: 1150, category: "بوليسية", image: "images/لوز مر.jpg" },
-  { id: 11, title: "قضية عنب الثعلب", author: " ميرنا المهدي ", price: 1150, category: "بوليسية", image: "images/عنب الثعلب.jpg" },
-  { id: 12, title: "قضية ذيل القط", author: " ميرنا المهدي ", price: 1150, category: "بوليسية", image: "images/ذيل القط.jpg" },
-  { id: 13, title: "قضية مخالب القط", author: " ميرنا المهدي ", price: 1150, category: "بوليسية", image: "images/مخالب القط.jpg" },
-
-  { id: 14, title: " 005 ", author: " شهد قربان ", price: 1200, category: "جريمة و تشويق", image: "images/005.jpg" },
-  { id: 15, title: " ستوكهولمز ", author: " شهد قربان ", price: 1200, category: "جريمة و تشويق", image: "images/ستوكهولم.jpg" },
-  { id: 16, title: " البارون ", author: " شهد قربان ", price: 1200, category: "جريمة و تشويق", image: "images/البارون.jpg" },
-  { id: 17, title: " الياقوت ", author: " شهد قربان ", price: 1450, category: "جريمة و تشويق", image: "images/الياقوت.jpg" },
-
-  { id: 18, title: " مملكة الاشرار ", author: " كيري مانيسكالكو ", price: 1450, category: "رعب", image: "images/مملكة الاشرار.jpg" },
-  { id: 19, title: " مملكة الملعونين ", author: " كيري مانيسكالكو ", price: 1450, category: "رعب", image: "images/مملكة الملعونين.jpg" },
-  { id: 20, title: " مملكة المرعبين ", author: " كيري مانيسكالكو ", price: 1450, category: "رعب", image: "images/مملكة المرعبين.jpg" }
+  { id: 1, title: " التغليف المجاني ", price: 1000, image: "images/رسائل قران.jpg" },
+  { id: 2, title: " التغليف الاسطوري ", price: 1450,  image: "images/مملكة المرعبين.jpg" }
 
 
 
@@ -55,7 +33,6 @@ function renderBooks(booksList) {
     card.innerHTML = `
       <img src="${book.image}" alt="${book.title}">
       <h3>${book.title}</h3>
-      <p class="author">${book.author}</p>
       <span class="price">${book.price.toLocaleString()} د.ج</span>
       <button class="add-btn" onclick="addToCart(${book.id})">🛒 إضافة للسلة</button>
     `;
@@ -63,37 +40,7 @@ function renderBooks(booksList) {
   });
 }
 
-// البحث المباشر
-function liveSearch() {
-  const input = document.getElementById('searchInput');
-  if (!input) return;
 
-  const filter = input.value.toLowerCase().trim();
-  const filtered = allBooks.filter(book => 
-    book.title.toLowerCase().includes(filter) || 
-    book.author.toLowerCase().includes(filter)
-  );
-
-  renderBooks(filtered);
-}
-
-// التصفية حسب التصنيف
-function filterBooks(categoryName, btnElement) {
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) searchInput.value = '';
-
-  const allFilterBtns = document.querySelectorAll('.filter-btn');
-  allFilterBtns.forEach(btn => btn.classList.remove('active'));
-  
-  if (btnElement) btnElement.classList.add('active');
-
-  if (categoryName === 'الكل') {
-    renderBooks(allBooks);
-  } else {
-    const filteredList = allBooks.filter(book => book.category === categoryName);
-    renderBooks(filteredList);
-  }
-}
 
 /* ==========================================
    3. إدارة السلة وتخزين البيانات (LocalStorage)
@@ -147,6 +94,16 @@ function addToCart(bookId) {
   if (overlay) overlay.classList.add('active');
 }
 
+
+// حذف عنصر
+function removeFromCart(bookId) {
+  cart = cart.filter(item => item.id !== bookId);
+  saveCartToStorage();
+  updateCartUI();
+}
+
+
+
 // تعديل الكمية
 function changeQuantity(bookId, change) {
   const item = cart.find(b => b.id === bookId);
@@ -162,13 +119,6 @@ function changeQuantity(bookId, change) {
   }
 }
 
-// حذف عنصر
-function removeFromCart(bookId) {
-  cart = cart.filter(item => item.id !== bookId);
-  saveCartToStorage();
-  updateCartUI();
-}
-
 // تفريغ السلة
 function clearCart() {
   if (cart.length === 0) return;
@@ -181,7 +131,8 @@ function clearCart() {
 
 // تحديث الواجهة والعدادات
 function updateCartUI() {
-  const container = document.getElementById('cartItemsContainer');
+      const container = document.getElementById('cartItemsContainer');
+
   const countEl = document.querySelector('.cart-count');
   const totalEl = document.getElementById('cartTotalPrice');
 
@@ -205,7 +156,7 @@ function updateCartUI() {
         <div class="cart-item-info">
           <h4>${item.title}</h4>
           <span class="price">${(item.price * item.quantity).toLocaleString()} د.ج</span>
-          <div class="qty-controls">
+                      <div class="qty-controls">
             <button class="qty-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
             <span>${item.quantity}</span>
             <button class="qty-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
@@ -359,6 +310,11 @@ window.onload = function() {
   loadCartFromStorage();
   updateCartUI();
 };
+
+
+
+
+
 
 
 
