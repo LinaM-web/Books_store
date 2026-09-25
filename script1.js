@@ -2,8 +2,8 @@
    1. بيانات الكتب
    ========================================== */
 const allBooks = [
-  { id: 1, title: " التغليف المجاني ", price: 1000, image: "images/رسائل قران.jpg" },
-  { id: 2, title: " التغليف الاسطوري ", price: 1450,  image: "images/مملكة المرعبين.jpg" }
+  { id: 1, title: " التغليف  ", price: 1000, image: "images/رسائل قران.jpg" },
+  { id: 2, title: " التغليف  ", price: 1450,  image: "images/مملكة المرعبين.jpg" }
 
 
 
@@ -240,7 +240,7 @@ function sendToWhatsApp(e) {
         // جلب البيانات مع التأكد من وجود العناصر لمنع توقف الكود
         const nameField = document.getElementById('custName');
         const phoneField = document.getElementById('custPhone');
-        const placeField = document.getElementById('custplace');
+        const placeField = document.getElementById('cust');
         const deliveryField = document.getElementById('deliveryType');
         const addressField = document.getElementById('custAddress');
         const notesField = document.getElementById('custNotes');
@@ -282,7 +282,7 @@ function sendToWhatsApp(e) {
         message += `📚 *الكتب المطلوبة:*\n${booksListText}\n`;
         message += `💰 *المجموع الكلي:* *${totalPrice.toLocaleString()} د.ج*`;
 
-        const phoneNumber = "213780243603"; // رقم الواتساب الخاص بك
+        const phoneNumber = "213000000000"; // رقم الواتساب الخاص بك
         const encodedMessage = encodeURIComponent(message);
         const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 

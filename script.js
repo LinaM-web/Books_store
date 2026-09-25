@@ -289,17 +289,32 @@ function sendToWhatsApp(e) {
         // جلب البيانات مع التأكد من وجود العناصر لمنع توقف الكود
         const nameField = document.getElementById('custName');
         const phoneField = document.getElementById('custPhone');
-        const placeField = document.getElementById('custplace');
+        const placeField = document.getElementById('custNam');
         const deliveryField = document.getElementById('deliveryType');
         const addressField = document.getElementById('custAddress');
         const notesField = document.getElementById('custNotes');
 
         const name = nameField ? nameField.value.trim() : '';
         const phone = phoneField ? phoneField.value.trim() : '';
-        const place = placeField ? placeField.value.trim() : '';
+        const plac = placeField ? placeField.value.trim() : '';
         const deliveryType = deliveryField ? deliveryField.value.trim() : 'غير محدد';
         const addressInput = addressField ? addressField.value.trim() : '';
         const notes = notesField ? notesField.value.trim() : '';
+
+
+
+
+
+
+
+        console.log("الاسم:", name);
+    console.log("الهاتف:", phone);
+    console.log("الولاية:", plac);
+    console.log("طريقة التوصيل:", deliveryType);
+
+
+
+
 
         // معالجة عنوان التوصيل
         let finalAddress = addressInput ? addressInput : "استلام من المكتب";
@@ -324,14 +339,14 @@ function sendToWhatsApp(e) {
         message += `👤 *معلومات الزبون:*\n`;
         message += `▪️ *الاسم:* ${name}\n`;
         message += `📞 *الهاتف:* ${phone}\n`;
-        message += `📍 *الولاية:* ${place}\n`;
+        message += `📍 *الولاية:* ${plac}\n`;
         message += `🚚 *طريقة التوصيل:* ${deliveryType}\n`;
         message += `🏠 *العنوان:* ${finalAddress}\n`;
         message += `📝 *ملاحظات:* ${notes ? notes : "لا توجد ملاحظات"}\n\n`;
         message += `📚 *الكتب المطلوبة:*\n${booksListText}\n`;
         message += `💰 *المجموع الكلي:* *${totalPrice.toLocaleString()} د.ج*`;
 
-        const phoneNumber = "213780243603"; // رقم الواتساب الخاص بك
+        const phoneNumber = "21300000000"; // رقم الواتساب الخاص بك
         const encodedMessage = encodeURIComponent(message);
         const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 

@@ -541,9 +541,6 @@ body {
 
 
 
-
-
-
 /*  */
 
 
@@ -588,9 +585,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end; 
-  padding: 40px 80px;
+  padding: 40px 50px;
   direction: rtl;
 }
+
+
 
 .packaging-content {
   max-width: 450px;
